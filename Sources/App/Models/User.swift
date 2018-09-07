@@ -1,5 +1,6 @@
 import FluentSQLite
 import Vapor
+import Authentication
 
 final class User: SQLiteModel {
     
@@ -14,8 +15,8 @@ final class User: SQLiteModel {
     }
 }
 
-
 extension User {
+    
     var comments: Children<User, Comment> {
         return children(\.userID)
     }
@@ -31,6 +32,18 @@ extension User {
     var suggestions: Children<User, Suggestion> {
         return children(\.userID)
     }
+}
+
+//Mark: - Authentication
+extension User {
+    struct PublicUser: Content {
+        var username: String
+        var token: String
+    }
+}
+
+extension User: TokenAuthenticatable {
+    typealias TokenType = Token
 }
 
 extension User: Content {}

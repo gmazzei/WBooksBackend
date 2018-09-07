@@ -26,6 +26,10 @@ extension Suggestion {
     
 }
 
-extension Suggestion: Content {}
+extension Suggestion: Content {
+    
+    
+    
+}
 extension Suggestion: Migration {}
 extension Suggestion: Parameter {}
