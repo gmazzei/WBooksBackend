@@ -27,4 +27,32 @@ final class UserController {
             return user.delete(on: req)
             }.transform(to: .ok)
     }
+    
+    func show(_ req: Request) throws -> Future<User> {
+        return try req.parameters.next(User.self)
+    }
+    
+    func listComments(_ req: Request) throws -> Future<[Comment]> {
+        return try req.parameters.next(User.self).flatMap { user in
+            return try user.comments.query(on: req).all()
+        }
+    }
+    
+    func listRents(_ req: Request) throws -> Future<[Rent]> {
+        return try req.parameters.next(User.self).flatMap { user in
+            return try user.rents.query(on: req).all()
+        }
+    }
+    
+    func listWishes(_ req: Request) throws -> Future<[Wish]> {
+        return try req.parameters.next(User.self).flatMap { user in
+            return try user.wishes.query(on: req).all()
+        }
+    }
+    
+    func listSuggestions(_ req: Request) throws -> Future<[Suggestion]> {
+        return try req.parameters.next(User.self).flatMap { user in
+            return try user.suggestions.query(on: req).all()
+        }
+    }
 }

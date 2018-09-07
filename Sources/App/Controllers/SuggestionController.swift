@@ -28,4 +28,8 @@ final class SuggestionController {
             return suggestion.delete(on: req)
             }.transform(to: .ok)
     }
+    
+    func show(_ req: Request) throws -> Future<Suggestion> {
+        return try req.parameters.next(Suggestion.self)
+    }
 }

@@ -14,6 +14,7 @@ final class Comment: SQLiteModel {
         self.userID = userID
         self.bookID = bookID
     }
+    
 }
 
 extension Comment {

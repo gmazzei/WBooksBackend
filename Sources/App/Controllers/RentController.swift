@@ -25,4 +25,8 @@ final class RentController {
             return rent.delete(on: req)
             }.transform(to: .ok)
     }
+    
+    func show(_ req: Request) throws -> Future<Rent> {
+        return try req.parameters.next(Rent.self)
+    }
 }

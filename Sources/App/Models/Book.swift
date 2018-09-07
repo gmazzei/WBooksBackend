@@ -20,6 +20,20 @@ final class Book: SQLiteModel {
     }
 }
 
+extension Book {
+    var comments: Children<Book, Comment> {
+        return children(\.bookID)
+    }
+    
+    var rents: Children<Book, Rent> {
+        return children(\.bookID)
+    }
+    
+    var wishes: Children<Book, Wish> {
+        return children(\.bookID)
+    }
+}
+
 extension Book: Content {}
 extension Book: Migration {}
 extension Book: Parameter {}

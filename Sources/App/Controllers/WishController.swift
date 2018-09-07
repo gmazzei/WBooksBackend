@@ -25,4 +25,8 @@ final class WishController {
             return wish.delete(on: req)
             }.transform(to: .ok)
     }
+    
+    func show(_ req: Request) throws -> Future<Wish> {
+        return try req.parameters.next(Wish.self)
+    }
 }
