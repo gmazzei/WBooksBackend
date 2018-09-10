@@ -20,7 +20,7 @@ final class UserController: BaseController {
                 .all()
         }
         
-        return future.map(to: Response.self) { tuples in
+        return future.map { tuples in
             
             let data = tuples.map { [unowned self] tuple in
                 self.createComment(comment: tuple.0.0, book: tuple.0.1, user: tuple.1)
@@ -31,24 +31,67 @@ final class UserController: BaseController {
         
     }
     
-    func listRents(_ req: Request) throws -> Future<[Rent]> {
+    func listRents(_ req: Request) throws -> Future<Response> {
         try checkAuth(req)
-        return try req.parameters.next(User.self).flatMap { user in
-            return try user.rents.query(on: req).all()
+        let future = try req.parameters.next(User.self).flatMap { user in
+            return try user.rents
+                .query(on: req)
+                .join(\Book.id, to: \Rent.bookID)
+                .join(\User.id, to: \Rent.userID)
+                .alsoDecode(Book.self)
+                .alsoDecode(User.self)
+                .all()
+        }
+        
+        return future.map { tuples in
+                
+                let data = tuples.map { [unowned self] tuple in
+                    self.createRent(rent: tuple.0.0, book: tuple.0.1, user: tuple.1)
+                }
+                
+                return try self.createResponse(req, data: data)
         }
     }
     
-    func listWishes(_ req: Request) throws -> Future<[Wish]> {
+    func listWishes(_ req: Request) throws -> Future<Response> {
         try checkAuth(req)
-        return try req.parameters.next(User.self).flatMap { user in
-            return try user.wishes.query(on: req).all()
+        let future = try req.parameters.next(User.self).flatMap { user in
+            return try user.wishes
+                .query(on: req)
+                .join(\Book.id, to: \Wish.bookID)
+                .join(\User.id, to: \Wish.userID)
+                .alsoDecode(Book.self)
+                .alsoDecode(User.self)
+                .all()
+        }
+        
+        return future.map { tuples in
+                
+                let data = tuples.map { [unowned self] tuple in
+                    self.createWish(wish: tuple.0.0, book: tuple.0.1, user: tuple.1)
+                }
+                
+                return try self.createResponse(req, data: data)
         }
     }
     
-    func listSuggestions(_ req: Request) throws -> Future<[Suggestion]> {
+    func listSuggestions(_ req: Request) throws -> Future<Response> {
         try checkAuth(req)
-        return try req.parameters.next(User.self).flatMap { user in
-            return try user.suggestions.query(on: req).all()
+        let future = try req.parameters.next(User.self).flatMap { user in
+            return try user.suggestions
+                .query(on: req)
+                .join(\User.id, to: \Suggestion.userID)
+                .alsoDecode(User.self)
+                .all()
+        }
+        
+        return future.map { tuples in
+            
+            let data = tuples.map { [unowned self] tuple in
+                self.createSuggestion(suggestion: tuple.0, user: tuple.1)
+            }
+            
+            return try self.createResponse(req, data: data)
         }
     }
     

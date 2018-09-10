@@ -9,7 +9,7 @@ final class SuggestionController: BaseController {
             .join(\User.id, to: \Suggestion.userID)
             .alsoDecode(User.self)
             .all()
-            .map(to: Response.self) { tuples in
+            .map { tuples in
                 
                 let data = tuples.map { [unowned self] tuple in
                     self.createSuggestion(suggestion: tuple.0, user: tuple.1)

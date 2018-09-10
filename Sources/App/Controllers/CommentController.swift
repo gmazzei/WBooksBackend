@@ -12,7 +12,7 @@ final class CommentController: BaseController {
             .alsoDecode(Book.self)
             .alsoDecode(User.self)
             .all()
-            .map(to: Response.self) { tuples in
+            .map { tuples in
                 
                 let data = tuples.map { [unowned self] tuple in
                     self.createComment(comment: tuple.0.0, book: tuple.0.1, user: tuple.1)
