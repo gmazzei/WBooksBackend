@@ -26,6 +26,15 @@ extension Wish {
     
 }
 
+extension Wish: Mappable {
+    
+    func toDictionary() -> [String : Any] {
+        return [
+            "id": id
+        ]
+    }
+}
+
 extension Wish: Content {}
 extension Wish: Migration {}
 extension Wish: Parameter {}

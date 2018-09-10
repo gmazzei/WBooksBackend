@@ -1,10 +1,25 @@
 import Vapor
+import HTTP
 
 final class CommentController: BaseController {
     
-    func list(_ req: Request) throws -> Future<[Comment]> {
+    func list(_ req: Request) throws -> Future<Response> {
         try checkAuth(req)
-        return Comment.query(on: req).all()
+        return Comment
+            .query(on: req)
+            .join(\Book.id, to: \Comment.bookID)
+            .join(\User.id, to: \Comment.userID)
+            .alsoDecode(Book.self)
+            .alsoDecode(User.self)
+            .all()
+            .map(to: Response.self) { tuples in
+                
+                let data = tuples.map { [unowned self] tuple in
+                    self.createComment(comment: tuple.0.0, book: tuple.0.1, user: tuple.1)
+                }
+                
+                return try self.createResponse(req, data: data)
+            }
     }
     
     

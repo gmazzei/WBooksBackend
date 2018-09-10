@@ -4,7 +4,8 @@ import Authentication
 final class AuthenticationController {
     
     func createAuthenticationToken(_ request: Request) throws -> Future<User.PublicUser> {
-        return try request.content.decode(User.self).flatMap(to: User.PublicUser.self) { user in
+        return try request.content.decode(User.self)
+            .flatMap(to: User.PublicUser.self) { user in
             
             let passwordHashed = try request.make(BCryptDigest.self).hash(user.password)
             let newUser = User(username: user.username, password: passwordHashed)

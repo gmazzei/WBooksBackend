@@ -26,6 +26,16 @@ extension Rent {
     
 }
 
+
+extension Rent: Mappable {
+    
+    func toDictionary() -> [String : Any] {
+        return [
+            "id": id
+        ]
+    }
+}
+
 extension Rent: Content {}
 extension Rent: Migration {}
 extension Rent: Parameter {}

@@ -28,6 +28,7 @@ public func routes(_ router: Router) throws {
     authedRoutes.get("books", Book.parameter, "wishes", use: bookController.listWishes)
     authedRoutes.post("books", use: bookController.create)
     authedRoutes.post("books", Book.parameter, "comments", use: bookController.createComment)
+
     
     let commentController = CommentController()
     authedRoutes.get("comments", use: commentController.list)
