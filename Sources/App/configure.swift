@@ -14,7 +14,7 @@ public func configure(
     try routes(router)
     services.register(router, as: Router.self)
 
-    let myService = NIOServerConfig.default(port: 8004)
+    let myService = NIOServerConfig.default(port: 8080)
     services.register(myService)
 
     try services.register(FluentSQLiteProvider())
