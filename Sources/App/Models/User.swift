@@ -34,6 +34,17 @@ extension User {
     }
 }
 
+extension User: Mappable {
+    
+    func toDictionary() -> [String : Any] {
+        return [
+            "id": id,
+            "username": username,
+            "password": password
+        ]
+    }
+}
+
 //Mark: - Authentication
 extension User {
     struct PublicUser: Content {

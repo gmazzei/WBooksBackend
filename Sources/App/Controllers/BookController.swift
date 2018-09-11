@@ -7,6 +7,53 @@ final class BookController: BaseController {
         return Book.query(on: req).all()
     }
     
+    func listComments(_ req: Request) throws -> Future<Response> {
+        try checkAuth(req)
+        
+        let future = try req.parameters.next(Book.self).flatMap { book in
+            return try book.comments
+                .query(on: req)
+                .join(\Book.id, to: \Comment.bookID)
+                .join(\User.id, to: \Comment.userID)
+                .alsoDecode(Book.self)
+                .alsoDecode(User.self)
+                .all()
+        }
+        
+        return future.map { tuples in
+            
+            let data = tuples.map { [unowned self] tuple in
+                self.createComment(comment: tuple.0.0, book: tuple.0.1, user: tuple.1)
+            }
+            
+            return try self.createResponse(req, data: data)
+        }
+        
+    }
+    
+    
+    func listRents(_ req: Request) throws -> Future<Response> {
+        try checkAuth(req)
+        let future = try req.parameters.next(Book.self).flatMap { book in
+            return try book.rents
+                .query(on: req)
+                .join(\Book.id, to: \Rent.bookID)
+                .join(\User.id, to: \Rent.userID)
+                .alsoDecode(Book.self)
+                .alsoDecode(User.self)
+                .all()
+        }
+        
+        return future.map { tuples in
+            
+            let data = tuples.map { [unowned self] tuple in
+                self.createRent(rent: tuple.0.0, book: tuple.0.1, user: tuple.1)
+            }
+            
+            return try self.createResponse(req, data: data)
+        }
+    }
+    
     func show(_ req: Request) throws -> Future<Book> {
         try checkAuth(req)
         return try req.parameters.next(Book.self)
@@ -19,24 +66,10 @@ final class BookController: BaseController {
         }
     }
     
-    func listComments(_ req: Request) throws -> Future<[Comment]> {
+    func showRent(_ req: Request) throws -> Future<Rent> {
         try checkAuth(req)
         return try req.parameters.next(Book.self).flatMap { book in
-            return try book.comments.query(on: req).all()
-        }
-    }
-    
-    func listRents(_ req: Request) throws -> Future<[Rent]> {
-        try checkAuth(req)
-        return try req.parameters.next(Book.self).flatMap { book in
-            return try book.rents.query(on: req).all()
-        }
-    }
-    
-    func listWishes(_ req: Request) throws -> Future<[Wish]> {
-        try checkAuth(req)
-        return try req.parameters.next(Book.self).flatMap { book in
-            return try book.wishes.query(on: req).all()
+            return try req.parameters.next(Rent.self)
         }
     }
     

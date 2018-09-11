@@ -35,6 +35,20 @@ extension Book {
     }
 }
 
+extension Book: Mappable {
+    
+    func toDictionary() -> [String : Any] {
+        return [
+            "id": id,
+            "author": author,
+            "title": title,
+            "image": image,
+            "year": year,
+            "genre": genre
+        ]
+    }
+}
+
 extension Book: Content {}
 extension Book: Migration {}
 extension Book: Parameter {}
