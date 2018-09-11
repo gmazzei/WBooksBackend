@@ -88,6 +88,12 @@ final class UserController: BaseController {
         }
     }
     
+    func showWish(_ req: Request) throws -> Future<Wish> {
+        try checkAuth(req)
+        return try req.parameters.next(User.self).flatMap { user in
+            return try req.parameters.next(Wish.self)
+        }
+    }
     
     func create(_ req: Request) throws -> Future<User> {
         try checkAuth(req)
@@ -96,11 +102,17 @@ final class UserController: BaseController {
         }
     }
     
-    
     func createRent(_ req: Request) throws -> Future<Rent> {
         try checkAuth(req)
         return try req.content.decode(Rent.self).flatMap { rent in
             return rent.save(on: req)
+        }
+    }
+    
+    func createWish(_ req: Request) throws -> Future<Wish> {
+        try checkAuth(req)
+        return try req.content.decode(Wish.self).flatMap { wish in
+            return wish.save(on: req)
         }
     }
 }
