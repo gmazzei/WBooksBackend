@@ -75,27 +75,6 @@ final class UserController: BaseController {
         }
     }
     
-    func listSuggestions(_ req: Request) throws -> Future<Response> {
-        try checkAuth(req)
-        let future = try req.parameters.next(User.self).flatMap { user in
-            return try user.suggestions
-                .query(on: req)
-                .join(\User.id, to: \Suggestion.userID)
-                .alsoDecode(User.self)
-                .all()
-        }
-        
-        return future.map { tuples in
-            
-            let data = tuples.map { [unowned self] tuple in
-                self.createSuggestion(suggestion: tuple.0, user: tuple.1)
-            }
-            
-            return try self.createResponse(req, data: data)
-        }
-    }
-    
-    
     func show(_ req: Request) throws -> Future<User> {
         try checkAuth(req)
         return try req.parameters.next(User.self)
