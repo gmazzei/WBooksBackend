@@ -43,4 +43,5 @@ final class SuggestionController: BaseController {
             return suggestion.save(on: req)
         }
     }
+    
 }
