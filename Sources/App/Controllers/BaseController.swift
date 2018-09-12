@@ -1,3 +1,5 @@
+import Vapor
+import FluentSQLite
 import Authentication
 
 class BaseController {
@@ -6,8 +8,9 @@ class BaseController {
         //try req.requireAuthenticated(User.self)
     }
     
-    internal func createResponse(_ req: Request, data: Any) throws -> Response {
+    internal func createGetResponse(_ req: Request, data: Any) throws -> Response {
         let response = req.makeResponse()
+        response.http.status = .ok
         response.http.headers.replaceOrAdd(name: .contentType, value: "application/json")
         
         let json = try JSONSerialization.data(withJSONObject: data)
@@ -16,6 +19,20 @@ class BaseController {
         return response
     }
     
+//    internal func createPostResponse(_ req: Request, data: Data) -> Response {
+//        let body = HTTPBody(data: data)
+//        var httpResponse = HTTPResponse(status: HTTPStatus.created, body: body)
+//        httpResponse.headers.replaceOrAdd(name: .contentType, value: "application/json")
+//        return req.makeResponse(http: httpResponse)
+//    }
+    
+    internal func createPostResponse(_ req: Request, data: Data) -> Response {
+        let response = req.makeResponse()
+        response.http.status = .created
+        response.http.headers.replaceOrAdd(name: .contentType, value: "application/json")
+        response.http.body = HTTPBody(data: data)
+        return response
+    }
     
     internal func createComment(comment: Comment, book: Book, user: User) -> [String:Any] {
         var comment = comment.toDictionary()
@@ -43,4 +60,5 @@ class BaseController {
         suggestion["user"] = user.toDictionary()
         return suggestion
     }
+    
 }

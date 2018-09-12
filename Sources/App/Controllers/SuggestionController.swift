@@ -16,7 +16,7 @@ final class SuggestionController: BaseController {
                     self.createSuggestion(suggestion: tuple.0, user: tuple.1)
                 }
                 
-                return try self.createResponse(req, data: data)
+                return try self.createGetResponse(req, data: data)
         }
     }
     
@@ -33,14 +33,20 @@ final class SuggestionController: BaseController {
         
         return future.map { [unowned self] tuple in
             let data = self.createSuggestion(suggestion: tuple!.0, user: tuple!.1)
-            return try self.createResponse(req, data: data)
+            return try self.createGetResponse(req, data: data)
         }
     }
     
-    func create(_ req: Request) throws -> Future<Suggestion> {
+    func create(_ req: Request) throws -> Future<Response> {
         try checkAuth(req)
-        return try req.content.decode(Suggestion.self).flatMap { suggestion in
+        
+        let future = try req.content.decode(Suggestion.self).flatMap { suggestion in
             return suggestion.save(on: req)
+        }
+        
+        return future.map { [unowned self] suggestion in
+            let data = try JSONEncoder().encode(suggestion)
+            return self.createPostResponse(req, data: data)
         }
     }
     

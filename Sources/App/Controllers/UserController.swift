@@ -27,7 +27,7 @@ final class UserController: BaseController {
                 self.createComment(comment: tuple.0.0, book: tuple.0.1, user: tuple.1)
             }
             
-            return try self.createResponse(req, data: data)
+            return try self.createGetResponse(req, data: data)
         }
         
     }
@@ -50,7 +50,7 @@ final class UserController: BaseController {
                     self.createRent(rent: tuple.0.0, book: tuple.0.1, user: tuple.1)
                 }
                 
-                return try self.createResponse(req, data: data)
+                return try self.createGetResponse(req, data: data)
         }
     }
     
@@ -72,7 +72,7 @@ final class UserController: BaseController {
                     self.createWish(wish: tuple.0.0, book: tuple.0.1, user: tuple.1)
                 }
                 
-                return try self.createResponse(req, data: data)
+                return try self.createGetResponse(req, data: data)
         }
     }
     
@@ -97,7 +97,7 @@ final class UserController: BaseController {
         
         return future.map { [unowned self] tuple in
             let data = self.createRent(rent: tuple!.0.0, book: tuple!.0.1, user: tuple!.1)
-            return try self.createResponse(req, data: data)
+            return try self.createGetResponse(req, data: data)
         }
     }
     
@@ -116,28 +116,43 @@ final class UserController: BaseController {
         
         return future.map { [unowned self] tuple in
             let data = self.createWish(wish: tuple!.0.0, book: tuple!.0.1, user: tuple!.1)
-            return try self.createResponse(req, data: data)
+            return try self.createGetResponse(req, data: data)
         }
     }
     
-    func create(_ req: Request) throws -> Future<User> {
+    func create(_ req: Request) throws -> Future<Response> {
         try checkAuth(req)
-        return try req.content.decode(User.self).flatMap { user in
+        let future = try req.content.decode(User.self).flatMap { user in
             return user.save(on: req)
         }
-    }
-    
-    func createRent(_ req: Request) throws -> Future<Rent> {
-        try checkAuth(req)
-        return try req.content.decode(Rent.self).flatMap { rent in
-            return rent.save(on: req)
+        
+        return future.map { [unowned self] user in
+            let data = try JSONEncoder().encode(user)
+            return self.createPostResponse(req, data: data)
         }
     }
     
-    func createWish(_ req: Request) throws -> Future<Wish> {
+    func createRent(_ req: Request) throws -> Future<Response> {
         try checkAuth(req)
-        return try req.content.decode(Wish.self).flatMap { wish in
+        let future = try req.content.decode(Rent.self).flatMap { rent in
+            return rent.save(on: req)
+        }
+        
+        return future.map { [unowned self] rent in
+            let data = try JSONEncoder().encode(rent)
+            return self.createPostResponse(req, data: data)
+        }
+    }
+    
+    func createWish(_ req: Request) throws -> Future<Response> {
+        try checkAuth(req)
+        let future = try req.content.decode(Wish.self).flatMap { wish in
             return wish.save(on: req)
+        }
+        
+        return future.map { [unowned self] wish in
+            let data = try JSONEncoder().encode(wish)
+            return self.createPostResponse(req, data: data)
         }
     }
 }

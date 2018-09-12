@@ -27,7 +27,7 @@ final class BookController: BaseController {
                 self.createComment(comment: tuple.0.0, book: tuple.0.1, user: tuple.1)
             }
             
-            return try self.createResponse(req, data: data)
+            return try self.createGetResponse(req, data: data)
         }
         
     }
@@ -51,7 +51,7 @@ final class BookController: BaseController {
                 self.createRent(rent: tuple.0.0, book: tuple.0.1, user: tuple.1)
             }
             
-            return try self.createResponse(req, data: data)
+            return try self.createGetResponse(req, data: data)
         }
     }
     
@@ -75,7 +75,7 @@ final class BookController: BaseController {
         
         return future.map { [unowned self] tuple in
             let data = self.createComment(comment: tuple!.0.0, book: tuple!.0.1, user: tuple!.1)
-            return try self.createResponse(req, data: data)
+            return try self.createGetResponse(req, data: data)
         }
     }
     
@@ -95,21 +95,31 @@ final class BookController: BaseController {
         
         return future.map { [unowned self] tuple in
             let data = self.createRent(rent: tuple!.0.0, book: tuple!.0.1, user: tuple!.1)
-            return try self.createResponse(req, data: data)
+            return try self.createGetResponse(req, data: data)
         }
     }
     
-    func create(_ req: Request) throws -> Future<Book> {
+    func create(_ req: Request) throws -> Future<Response> {
         try checkAuth(req)
-        return try req.content.decode(Book.self).flatMap { book in
+        let future = try req.content.decode(Book.self).flatMap { book in
             return book.save(on: req)
         }
+        
+        return future.map { [unowned self] book in
+            let data = try JSONEncoder().encode(book)
+            return self.createPostResponse(req, data: data)
+        }
     }
     
-    func createComment(_ req: Request) throws -> Future<Comment> {
+    func createComment(_ req: Request) throws -> Future<Response> {
         try checkAuth(req)
-        return try req.content.decode(Comment.self).flatMap { comment in
+        let future = try req.content.decode(Comment.self).flatMap { comment in
             return comment.save(on: req)
+        }
+        
+        return future.map { [unowned self] comment in
+            let data = try JSONEncoder().encode(comment)
+            return self.createPostResponse(req, data: data)
         }
     }
     
