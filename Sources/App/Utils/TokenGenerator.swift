@@ -1,4 +1,5 @@
 #if os(Linux)
+import SwiftShims
 import Glibc
 #else
 import Darwin
@@ -22,7 +23,7 @@ class TokenGenerator {
     
     private class func cs_arc4random_uniform(upperBound: UInt32) -> UInt32 {
         #if os(Linux)
-        return Int(random() % upperBound)
+        return Int(_swift_stdlib_cxx11_mt19937_uniform(upperBound))
         #else
         return cs_arc4random_uniform(upperBound: upperBound)
         #endif
