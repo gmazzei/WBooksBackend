@@ -25,7 +25,7 @@ class TokenGenerator {
         #if os(Linux)
         return _swift_stdlib_cxx11_mt19937_uniform(upperBound)
         #else
-        return cs_arc4random_uniform(upperBound: upperBound)
+        return arc4random_uniform(upperBound: upperBound)
         #endif
     }
 }
