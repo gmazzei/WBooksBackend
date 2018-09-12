@@ -1,4 +1,5 @@
 import Vapor
+import FluentSQLite
 
 final class UserController: BaseController {
     
@@ -81,17 +82,41 @@ final class UserController: BaseController {
     }
     
     
-    func showRent(_ req: Request) throws -> Future<Rent> {
+    func showRent(_ req: Request) throws -> Future<Response> {
         try checkAuth(req)
-        return try req.parameters.next(User.self).flatMap { user in
-            return try req.parameters.next(Rent.self)
+        let user = try req.parameters.next(User.self)
+        let rentId = try req.parameters.next(Int.self)
+        
+        let future = Rent.query(on: req)
+            .filter(\Rent.id == rentId)
+            .join(\Book.id, to: \Rent.bookID)
+            .join(\User.id, to: \Rent.userID)
+            .alsoDecode(Book.self)
+            .alsoDecode(User.self)
+            .first()
+        
+        return future.map { [unowned self] tuple in
+            let data = self.createRent(rent: tuple!.0.0, book: tuple!.0.1, user: tuple!.1)
+            return try self.createResponse(req, data: data)
         }
     }
     
-    func showWish(_ req: Request) throws -> Future<Wish> {
+    func showWish(_ req: Request) throws -> Future<Response> {
         try checkAuth(req)
-        return try req.parameters.next(User.self).flatMap { user in
-            return try req.parameters.next(Wish.self)
+        let user = try req.parameters.next(User.self)
+        let wishId = try req.parameters.next(Int.self)
+        
+        let future = Wish.query(on: req)
+            .filter(\Wish.id == wishId)
+            .join(\Book.id, to: \Wish.bookID)
+            .join(\User.id, to: \Wish.userID)
+            .alsoDecode(Book.self)
+            .alsoDecode(User.self)
+            .first()
+        
+        return future.map { [unowned self] tuple in
+            let data = self.createWish(wish: tuple!.0.0, book: tuple!.0.1, user: tuple!.1)
+            return try self.createResponse(req, data: data)
         }
     }
     
