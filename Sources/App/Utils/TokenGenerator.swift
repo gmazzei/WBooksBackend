@@ -22,7 +22,7 @@ class TokenGenerator {
     
     private class func cs_arc4random_uniform(upperBound: UInt32) -> UInt32 {
         #if os(Linux)
-        return 3
+        return Int(random() % upperBound)
         #else
         return cs_arc4random_uniform(upperBound: upperBound)
         #endif
