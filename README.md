@@ -3,4 +3,4 @@ Backend for the Swift training
 
 ## Documentation
 
-Apiary: wbooksbackend.docs.apiary.io
+Apiary: https://wbooksbackend.docs.apiary.io/
