@@ -1,7 +1,7 @@
-#if os(OSX) || os(iOS)
-import Darwin
-#elseif os(Linux)
+#if os(Linux)
 import Glibc
+#else
+import Darwin
 #endif
 
 class TokenGenerator {
@@ -21,10 +21,10 @@ class TokenGenerator {
     }
     
     private class func cs_arc4random_uniform(upperBound: UInt32) -> UInt32 {
-        #if os(OSX) || os(iOS)
-        return arc4random_uniform(upperBound)
-        #elseif os(Linux)
-        return _swift_stdlib_arc4random_uniform(upperBound)
+        #if os(Linux)
+        return 3
+        #else
+        return cs_arc4random_uniform(upperBound: upperBound)
         #endif
     }
 }

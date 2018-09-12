@@ -1,6 +1,5 @@
 import FluentSQLite
 import Vapor
-import HTTP
 
 final class Book: SQLiteModel {
     
