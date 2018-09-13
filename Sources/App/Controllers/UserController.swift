@@ -1,5 +1,6 @@
 import Vapor
 import FluentPostgreSQL
+import Authentication
 
 final class UserController: BaseController {
     
@@ -122,7 +123,9 @@ final class UserController: BaseController {
     
     func create(_ req: Request) throws -> Future<Response> {
         try checkAuth(req)
-        let future = try req.content.decode(User.self).flatMap { user in
+        let future = try req.content.decode(User.self).flatMap { (user: User) -> Future<User> in
+            let hashedPassword = try req.make(BCryptDigest.self).hash(user.password)
+            user.password = hashedPassword
             return user.save(on: req)
         }
         

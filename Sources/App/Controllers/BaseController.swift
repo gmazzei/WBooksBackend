@@ -5,7 +5,7 @@ import Authentication
 class BaseController {
     
     internal func checkAuth(_ req: Request) throws {
-        //try req.requireAuthenticated(User.self)
+        try req.requireAuthenticated(User.self)
     }
     
     internal func createGetResponse(_ req: Request, data: Any) throws -> Response {
@@ -18,13 +18,6 @@ class BaseController {
         
         return response
     }
-    
-//    internal func createPostResponse(_ req: Request, data: Data) -> Response {
-//        let body = HTTPBody(data: data)
-//        var httpResponse = HTTPResponse(status: HTTPStatus.created, body: body)
-//        httpResponse.headers.replaceOrAdd(name: .contentType, value: "application/json")
-//        return req.makeResponse(http: httpResponse)
-//    }
     
     internal func createPostResponse(_ req: Request, data: Data) -> Response {
         let response = req.makeResponse()

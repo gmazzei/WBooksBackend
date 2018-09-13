@@ -34,7 +34,7 @@ public func configure(
 
 
 private func getDatabaseConfig(_ env: Environment) -> PostgreSQLDatabaseConfig {
-    if (env == .production) {
+    if env == .production {
         let databaseUrl = ProcessInfo.processInfo.environment["DATABASE_URL"]
         return PostgreSQLDatabaseConfig(url: databaseUrl!)!
     } else {
