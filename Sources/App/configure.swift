@@ -15,28 +15,8 @@ public func configure(
     services.register(router, as: Router.self)
 
     try services.register(FluentPostgreSQLProvider())
-    let databaseUrl = ProcessInfo.processInfo.environment["DATABASE_URL"]
-    print("DATABASE URL = \(databaseUrl)")
-    /*
-    let postgresqlConfig = PostgreSQLDatabaseConfig(
-        hostname: "127.0.0.1",
-        port: 5432,
-        username: "gabrielleandromazzei",
-        database: "wbooks",
-        password: nil
-    )
-    */
-    /*
-    let postgresqlConfig = PostgreSQLDatabaseConfig(
-        hostname: "ec2-75-101-153-56.compute-1.amazonaws.com",
-        port: 5432,
-        username: "shkiiqdbrpuwci",
-        database: "d7p1hi5krji6i8",
-        password: "28bf3122ca40d885c6bcfaee5b8f6a6af58f59b8ba1d3515d06f68b4afb2aff2"
-    )
-    */
     
-    let postgresqlConfig = PostgreSQLDatabaseConfig(url: databaseUrl!)!
+    let postgresqlConfig = getDatabaseConfig(env)
     services.register(postgresqlConfig)
     
     var migrations = MigrationConfig()
@@ -50,4 +30,20 @@ public func configure(
     services.register(migrations)
     
     try services.register(AuthenticationProvider())
+}
+
+
+private func getDatabaseConfig(_ env: Environment) -> PostgreSQLDatabaseConfig {
+    if (env == .production) {
+        let databaseUrl = ProcessInfo.processInfo.environment["DATABASE_URL"]
+        return PostgreSQLDatabaseConfig(url: databaseUrl!)!
+    } else {
+        return PostgreSQLDatabaseConfig(
+            hostname: "127.0.0.1",
+            port: 5432,
+            username: "postgres",
+            database: "wbooks",
+            password: nil
+        )
+    }
 }
