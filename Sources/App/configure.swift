@@ -24,7 +24,7 @@ public func configure(
         password: nil
     )
     */
-    
+    /*
     let postgresqlConfig = PostgreSQLDatabaseConfig(
         hostname: "ec2-75-101-153-56.compute-1.amazonaws.com",
         port: 5432,
@@ -32,7 +32,8 @@ public func configure(
         database: "d7p1hi5krji6i8",
         password: "28bf3122ca40d885c6bcfaee5b8f6a6af58f59b8ba1d3515d06f68b4afb2aff2"
     )
-    
+    */
+    let postgresqlConfig = PostgreSQLDatabaseConfig(url: "postgres://shkiiqdbrpuwci:28bf3122ca40d885c6bcfaee5b8f6a6af58f59b8ba1d3515d06f68b4afb2aff2@ec2-75-101-153-56.compute-1.amazonaws.com:5432/d7p1hi5krji6i8")
     services.register(postgresqlConfig)
     
     var migrations = MigrationConfig()
