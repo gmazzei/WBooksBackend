@@ -15,7 +15,7 @@ public func configure(
     services.register(router, as: Router.self)
 
     try services.register(FluentPostgreSQLProvider())
-    /*
+    
     let postgresqlConfig = PostgreSQLDatabaseConfig(
         hostname: "127.0.0.1",
         port: 5432,
@@ -23,7 +23,7 @@ public func configure(
         database: "wbooks",
         password: nil
     )
-    */
+ 
     /*
     let postgresqlConfig = PostgreSQLDatabaseConfig(
         hostname: "ec2-75-101-153-56.compute-1.amazonaws.com",
@@ -33,7 +33,9 @@ public func configure(
         password: "28bf3122ca40d885c6bcfaee5b8f6a6af58f59b8ba1d3515d06f68b4afb2aff2"
     )
     */
-    let postgresqlConfig = PostgreSQLDatabaseConfig(url: "postgres://shkiiqdbrpuwci:28bf3122ca40d885c6bcfaee5b8f6a6af58f59b8ba1d3515d06f68b4afb2aff2@ec2-75-101-153-56.compute-1.amazonaws.com:5432/d7p1hi5krji6i8")
+    /*
+    let postgresqlConfig = PostgreSQLDatabaseConfig(url: "postgres://shkiiqdbrpuwci:28bf3122ca40d885c6bcfaee5b8f6a6af58f59b8ba1d3515d06f68b4afb2aff2@ec2-75-101-153-56.compute-1.amazonaws.com:5432/d7p1hi5krji6i8").unsafelyUnwrapped
+    */
     services.register(postgresqlConfig)
     
     var migrations = MigrationConfig()
