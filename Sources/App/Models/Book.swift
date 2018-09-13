@@ -1,7 +1,7 @@
-import FluentSQLite
+import FluentPostgreSQL
 import Vapor
 
-final class Book: SQLiteModel {
+final class Book: PostgreSQLModel {
     
     var id: Int?
     var author: String

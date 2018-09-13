@@ -1,8 +1,8 @@
-import FluentSQLite
+import FluentPostgreSQL
 import Vapor
 import Authentication
 
-final class Token: SQLiteModel {
+final class Token: PostgreSQLModel {
     var id: Int?
     var token: String
     var userID: User.ID

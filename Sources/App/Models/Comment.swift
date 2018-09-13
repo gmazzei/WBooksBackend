@@ -1,7 +1,7 @@
-import FluentSQLite
+import FluentPostgreSQL
 import Vapor
 
-final class Comment: SQLiteModel {
+final class Comment: PostgreSQLModel {
     
     var id: Int?
     var content: String

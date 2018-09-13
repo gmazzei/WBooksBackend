@@ -1,5 +1,5 @@
 import Vapor
-import FluentSQLite
+import FluentPostgreSQL
 import Authentication
 
 /// Called before your application initializes.
@@ -14,20 +14,26 @@ public func configure(
     try routes(router)
     services.register(router, as: Router.self)
 
-    try services.register(FluentSQLiteProvider())
+    try services.register(FluentPostgreSQLProvider())
 
-    var databases = DatabasesConfig()
-    try databases.add(database: SQLiteDatabase(storage: .memory), as: .sqlite)
-    services.register(databases)
+    let postgresqlConfig = PostgreSQLDatabaseConfig(
+        hostname: "127.0.0.1",
+        port: 5432,
+        username: "gabrielleandromazzei",
+        database: "wbooks",
+        password: nil
+    )
+    
+    services.register(postgresqlConfig)
     
     var migrations = MigrationConfig()
-    migrations.add(model: User.self, database: .sqlite)
-    migrations.add(model: Book.self, database: .sqlite)
-    migrations.add(model: Comment.self, database: .sqlite)
-    migrations.add(model: Rent.self, database: .sqlite)
-    migrations.add(model: Wish.self, database: .sqlite)
-    migrations.add(model: Suggestion.self, database: .sqlite)
-    migrations.add(model: Token.self, database: .sqlite)
+    migrations.add(model: User.self, database: .psql)
+    migrations.add(model: Book.self, database: .psql)
+    migrations.add(model: Comment.self, database: .psql)
+    migrations.add(model: Rent.self, database: .psql)
+    migrations.add(model: Wish.self, database: .psql)
+    migrations.add(model: Suggestion.self, database: .psql)
+    migrations.add(model: Token.self, database: .psql)
     services.register(migrations)
     
     try services.register(AuthenticationProvider())

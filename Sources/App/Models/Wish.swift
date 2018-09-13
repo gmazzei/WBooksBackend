@@ -1,7 +1,7 @@
-import FluentSQLite
+import FluentPostgreSQL
 import Vapor
 
-final class Wish: SQLiteModel {
+final class Wish: PostgreSQLModel {
     
     var id: Int?
     var userID: User.ID

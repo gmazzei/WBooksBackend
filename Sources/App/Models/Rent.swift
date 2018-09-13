@@ -1,7 +1,7 @@
-import FluentSQLite
+import FluentPostgreSQL
 import Vapor
 
-final class Rent: SQLiteModel {
+final class Rent: PostgreSQLModel {
     
     var id: Int?
     var userID: User.ID

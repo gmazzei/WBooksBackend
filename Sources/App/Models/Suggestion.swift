@@ -1,7 +1,7 @@
-import FluentSQLite
+import FluentPostgreSQL
 import Vapor
 
-final class Suggestion: SQLiteModel {
+final class Suggestion: PostgreSQLModel {
     
     var id: Int?
     var title: String
