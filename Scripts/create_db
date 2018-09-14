@@ -101,7 +101,7 @@ readonly USERS_URI="/users"
 
 declare -a user_list=(
 	'{
-		"username": "admin",
+		"username": "juanrodriguez",
 		"password": "juanrodriguez"
 	}'
 	'{
@@ -119,6 +119,10 @@ declare -a user_list=(
 	'{
 		"username": "sergiohernandez",
 		"password": "sergiohernandez"
+	}'
+	'{
+		"username": "test",
+		"password": "test"
 	}'
 )
 
