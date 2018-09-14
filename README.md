@@ -53,6 +53,7 @@ cd WBooksBackend
 swift build
 swift run
 </pre>
+<br/>
 
 3) Open another terminal and run the following code to add data into the DB:
 <pre>
