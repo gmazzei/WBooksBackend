@@ -5,7 +5,7 @@ import Authentication
 class BaseController {
     
     internal func checkAuth(_ req: Request) throws {
-        try req.requireAuthenticated(User.self)
+        //try req.requireAuthenticated(User.self)
     }
     
     internal func createGetResponse(_ req: Request, data: Any) throws -> Response {
