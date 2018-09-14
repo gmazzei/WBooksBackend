@@ -53,9 +53,3 @@ sh create_db
 \q
 swift run
 </pre>
-
-3) Create data
-<pre>
-
-</pre>
-
