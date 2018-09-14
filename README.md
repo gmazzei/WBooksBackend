@@ -49,7 +49,7 @@ swift build
 psql wbooks
 INSERT INTO "User" (id, username, password) 
 VALUES (1, 'admin', '$2b$12$44XOBLDrVm11Na2hhhJguefW8TilXkruOG8PIlNL3Y2bNkRHZXqBG');
-sh create_db
+sh Scripts/create_db
 \q
 swift run
 </pre>
