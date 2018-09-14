@@ -2,6 +2,10 @@
 Backend for the Swift training
 <br/><br/>
 
+## Requirements
+<ul><li>Swift 4.1</li></ul>
+<br/>
+
 ## Documentation
 You will find all the information necessary to interact with the API here: <br/>
 https://wbooksbackend.docs.apiary.io/
@@ -31,13 +35,12 @@ brew services start postgresql
 
 2) Prepare DB
 <pre>
-psql createdb wbooks_test
+createdb wbooks_test
 psql wbooks_test
 CREATE USER postgres SUPERUSER;
 CREATE DATABASE wbooks WITH OWNER postgres;
 \q
-psql dropdb wbooks_test
-psql wbooks
+dropdb wbooks_test
 </pre>
 <br/>
 
