@@ -12,8 +12,6 @@ readonly AUTH_TOKEN=$(
 	sed -e 's/"token":"\(.*\)"/\1/'
 )
 
-echo "RESPONSE: $AUTH_TOKEN"
-
 echo "Creating Books...\n"
 readonly BOOKS_URI="/books"
 
