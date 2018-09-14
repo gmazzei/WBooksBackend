@@ -30,7 +30,7 @@ psql wbooks_test
 CREATE USER postgres SUPERUSER;
 CREATE DATABASE wbooks WITH OWNER postgres;
 \q
-dropdb wbooks_test
+psql dropdb wbooks_test
 </pre>
 <br/>
 
