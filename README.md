@@ -14,12 +14,14 @@ https://wbooksbackend.docs.apiary.io/
 
 ## API
 The app is now running on Heroku. You can interact with it through this URL: <br/>
+<pre>
 https://powerful-waters-21107.herokuapp.com/
+</pre>
 <br/>
 
 ### Example
 <pre>
-curl https://powerful-waters-21107.herokuapp.com/books
+curl https://powerful-waters-21107.herokuapp.com<b>/books</b>
 </pre>
 <br/>
 
@@ -49,10 +51,14 @@ dropdb wbooks_test
 git clone git@github.com:gmazzei/WBooksBackend.git
 cd WBooksBackend
 swift build
+swift run
+</pre>
+
+3) Open another terminal and run the following code to add data into the DB:
+<pre>
 psql wbooks
 INSERT INTO "User" (id, username, password) 
 VALUES (1, 'admin', '$2b$12$44XOBLDrVm11Na2hhhJguefW8TilXkruOG8PIlNL3Y2bNkRHZXqBG');
-sh Scripts/create_db
 \q
-swift run
+sh Scripts/create_db
 </pre>
