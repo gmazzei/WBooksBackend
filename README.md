@@ -25,12 +25,19 @@ curl https://powerful-waters-21107.herokuapp.com/books
 <pre>
 brew install postgres
 brew services start postgresql
+</pre>
+
+<br/>
+
+2) Prepare DB
+<pre>
 psql createdb wbooks_test
 psql wbooks_test
 CREATE USER postgres SUPERUSER;
 CREATE DATABASE wbooks WITH OWNER postgres;
 \q
 psql dropdb wbooks_test
+psql wbooks
 </pre>
 <br/>
 
@@ -39,5 +46,16 @@ psql dropdb wbooks_test
 git clone git@github.com:gmazzei/WBooksBackend.git
 cd WBooksBackend
 swift build
+psql wbooks
+INSERT INTO "User" (id, username, password) 
+VALUES (1, 'admin', '$2b$12$44XOBLDrVm11Na2hhhJguefW8TilXkruOG8PIlNL3Y2bNkRHZXqBG');
+sh create_db
+\q
 swift run
 </pre>
+
+3) Create data
+<pre>
+
+</pre>
+
