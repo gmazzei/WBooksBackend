@@ -24,10 +24,13 @@ curl https://powerful-waters-21107.herokuapp.com/books
 1) Install PostgreSQL
 <pre>
 brew install postgres
-rm -r /usr/local/var/postgres
-initdb /usr/local/var/postgres
-psql -U postgres -c "CREATE USER postgres SUPERUSER"
-psql -U postgres -c "CREATE DATABASE wbooks WITH OWNER postgres"
+brew services start postgresql
+psql createdb wbooks_test
+psql wbooks_test
+CREATE USER postgres SUPERUSER;
+CREATE DATABASE wbooks WITH OWNER postgres;
+\q
+dropdb wbooks_test
 </pre>
 <br/>
 
@@ -38,4 +41,3 @@ cd WBooksBackend
 swift build
 swift run
 </pre>
-
