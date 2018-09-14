@@ -103,10 +103,6 @@ declare -a user_list=(
 		"password": "juanrodriguez"
 	}'
 	'{
-		"username": "juanrodriguez",
-		"password": "juanrodriguez"
-	}'
-	'{
 		"username": "manuelhernandez",
 		"password": "manuelhernandez"
 	}'
@@ -121,6 +117,10 @@ declare -a user_list=(
 	'{
 		"username": "test",
 		"password": "test"
+	}'
+	'{
+		"username": "test2",
+		"password": "test2"
 	}'
 )
 
