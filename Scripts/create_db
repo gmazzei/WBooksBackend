@@ -12,8 +12,6 @@ readonly AUTH_TOKEN=$(
 	sed -e 's/"token":"\(.*\)"/\1/'
 )
 
-echo "RESPONSE: $AUTH_TOKEN"
-
 echo "Creating Books...\n"
 readonly BOOKS_URI="/books"
 
@@ -101,10 +99,6 @@ readonly USERS_URI="/users"
 
 declare -a user_list=(
 	'{
-		"username": "admin",
-		"password": "juanrodriguez"
-	}'
-	'{
 		"username": "juanrodriguez",
 		"password": "juanrodriguez"
 	}'
@@ -119,6 +113,14 @@ declare -a user_list=(
 	'{
 		"username": "sergiohernandez",
 		"password": "sergiohernandez"
+	}'
+	'{
+		"username": "test",
+		"password": "test"
+	}'
+	'{
+		"username": "test2",
+		"password": "test2"
 	}'
 )
 
