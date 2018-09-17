@@ -25,6 +25,12 @@ curl https://powerful-waters-21107.herokuapp.com<b>/books</b>
 </pre>
 <br/>
 
+
+## DER
+
+![alt text](https://raw.githubusercontent.com/gmazzei/WBooksBackend/master/DER.png)
+<br/>
+
 ## Running locally
 
 1) Install PostgreSQL
