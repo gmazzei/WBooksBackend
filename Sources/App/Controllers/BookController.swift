@@ -106,7 +106,7 @@ final class BookController: BaseController {
         }
         
         return future.map { [unowned self] book in
-            let data = try JSONEncoder().encode(book)
+            let data = try self.encoder.encode(book)
             return self.createPostResponse(req, data: data)
         }
     }
@@ -118,7 +118,7 @@ final class BookController: BaseController {
         }
         
         return future.map { [unowned self] comment in
-            let data = try JSONEncoder().encode(comment)
+            let data = try self.encoder.encode(comment)
             return self.createPostResponse(req, data: data)
         }
     }

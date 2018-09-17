@@ -6,11 +6,11 @@ final class Book: PostgreSQLModel {
     var id: Int?
     var author: String
     var title: String
-    var image: String
+    var image: String?
     var year: String
     var genre: String
     
-    init(id: Int? = nil, author: String, title: String, image: String, year: String, genre: String) {
+    init(id: Int? = nil, author: String, title: String, image: String?, year: String, genre: String) {
         self.id = id
         self.author = author
         self.title = title
@@ -37,14 +37,19 @@ extension Book {
 extension Book: Mappable {
     
     func toDictionary() -> [String : Any] {
-        return [
+        var dictionary: [String: Any] = [
             "id": id,
             "author": author,
             "title": title,
-            "image": image,
             "year": year,
             "genre": genre
         ]
+        
+        if image != nil {
+            dictionary["image"] = image
+        }
+        
+        return dictionary
     }
 }
 

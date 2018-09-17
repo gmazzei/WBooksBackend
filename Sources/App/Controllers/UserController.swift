@@ -130,7 +130,7 @@ final class UserController: BaseController {
         }
         
         return future.map { [unowned self] user in
-            let data = try JSONEncoder().encode(user)
+            let data = try self.encoder.encode(user)
             return self.createPostResponse(req, data: data)
         }
     }
@@ -142,7 +142,7 @@ final class UserController: BaseController {
         }
         
         return future.map { [unowned self] rent in
-            let data = try JSONEncoder().encode(rent)
+            let data = try self.encoder.encode(rent)
             return self.createPostResponse(req, data: data)
         }
     }
@@ -154,7 +154,7 @@ final class UserController: BaseController {
         }
         
         return future.map { [unowned self] wish in
-            let data = try JSONEncoder().encode(wish)
+            let data = try self.encoder.encode(wish)
             return self.createPostResponse(req, data: data)
         }
     }

@@ -45,7 +45,7 @@ final class SuggestionController: BaseController {
         }
         
         return future.map { [unowned self] suggestion in
-            let data = try JSONEncoder().encode(suggestion)
+            let data = try self.encoder.encode(suggestion)
             return self.createPostResponse(req, data: data)
         }
     }

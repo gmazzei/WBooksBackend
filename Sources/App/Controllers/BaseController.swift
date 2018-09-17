@@ -4,8 +4,19 @@ import Authentication
 
 class BaseController {
     
+    let encoder: JSONEncoder
+    let decoder: JSONDecoder
+    
+    init() {
+        encoder = JSONEncoder()
+        decoder = JSONDecoder()
+        let dateFormatter = DateUtils.getIso8601Formatter()
+        encoder.dateEncodingStrategy = .formatted(dateFormatter)
+        decoder.dateDecodingStrategy = .formatted(dateFormatter)
+    }
+    
     internal func checkAuth(_ req: Request) throws {
-        try req.requireAuthenticated(User.self)
+        //try req.requireAuthenticated(User.self)
     }
     
     internal func createGetResponse(_ req: Request, data: Any) throws -> Response {

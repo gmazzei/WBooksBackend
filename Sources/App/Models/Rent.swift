@@ -6,11 +6,17 @@ final class Rent: PostgreSQLModel {
     var id: Int?
     var userID: User.ID
     var bookID: Book.ID
+    var from: Date
+    var to: Date
+    var returnedAt: Date?
     
-    init(id: Int? = nil, userID: User.ID, bookID: Book.ID) {
+    init(id: Int? = nil, userID: User.ID, bookID: Book.ID, from: Date, to: Date, returnedAt: Date?) {
         self.id = id
         self.userID = userID
         self.bookID = bookID
+        self.from = from
+        self.to = to
+        self.returnedAt = returnedAt
     }
 }
 
@@ -30,9 +36,20 @@ extension Rent {
 extension Rent: Mappable {
     
     func toDictionary() -> [String : Any] {
-        return [
-            "id": id
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
+        
+        var dictionary: [String: Any] = [
+            "id": id,
+            "from": formatter.string(from: from),
+            "to": formatter.string(from: to)
         ]
+        
+        if returnedAt != nil {
+            dictionary["returnedAt"] = formatter.string(from: returnedAt!)
+        }
+        
+        return dictionary
     }
 }
 
