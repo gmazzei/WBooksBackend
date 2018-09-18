@@ -55,6 +55,19 @@ final class BookController: BaseController {
         }
     }
     
+    
+    func listSuggestedBooks(_ req: Request) throws -> Future<[Book]> {
+        try checkAuth(req)
+        return try req.parameters.next(Book.self).flatMap { book in
+            return Book.query(on: req)
+                .filter(\Book.genre == book.genre)
+                .filter(\Book.id != book.id)
+                .all()
+        }
+        
+    }
+    
+    
     func show(_ req: Request) throws -> Future<Book> {
         try checkAuth(req)
         return try req.parameters.next(Book.self)
