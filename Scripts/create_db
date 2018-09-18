@@ -158,3 +158,43 @@ do
 done
 
 echo "Done!\n\n"
+
+
+echo "Creating Rents...\n"
+
+readonly RENT_USER=1
+readonly RENTS_URL="/users/$RENT_USER/rents"
+
+for book_id in {1..2}
+do
+	curl \
+	-d  "{\"userID\": $RENT_USER, \"bookID\": $book_id, \"from\": \"2018-09-17T00:00:00-03:00\", \"to\": \"2018-09-24T00:00:00-03:00\"}" \
+	-H "Content-Type: application/json" \
+	-H "Authorization: Bearer $AUTH_TOKEN" \
+	-X POST \
+	"$BASE_URL$RENTS_URL"
+
+	echo "\n"
+done
+
+echo "Done!\n\n"
+
+
+echo "Creating Wishes...\n"
+
+readonly WISH_USER=1
+readonly WISHES_URL="/users/$WISH_USER/wishes"
+
+for book_id in {3..4}
+do
+	curl \
+	-d  "{\"userID\": $WISH_USER, \"bookID\": $book_id}" \
+	-H "Content-Type: application/json" \
+	-H "Authorization: Bearer $AUTH_TOKEN" \
+	-X POST \
+	"$BASE_URL$WISHES_URL"
+
+	echo "\n"
+done
+
+echo "Done!\n\n"
