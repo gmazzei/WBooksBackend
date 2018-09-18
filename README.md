@@ -17,7 +17,6 @@ The app is now running on Heroku. You can interact with it through this URL: <br
 <pre>
 https://powerful-waters-21107.herokuapp.com/
 </pre>
-<br/>
 
 ### Example
 <pre>
