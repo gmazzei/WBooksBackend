@@ -1,5 +1,6 @@
 import FluentPostgreSQL
 import Vapor
+import Pagination
 
 final class Book: PostgreSQLModel {
     
@@ -56,3 +57,4 @@ extension Book: Mappable {
 extension Book: Content {}
 extension Book: Migration {}
 extension Book: Parameter {}
+extension Book: Paginatable {}

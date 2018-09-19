@@ -1,11 +1,30 @@
 import Vapor
 import FluentPostgreSQL
+import Pagination
 
 final class BookController: BaseController {
     
     func list(_ req: Request) throws -> Future<[Book]> {
         try checkAuth(req)
+        
+        if req.hasPagination() {
+            return try paginatedList(req)
+        } else {
+            return fullList(req)
+        }
+    }
+    
+    
+    private func fullList(_ req: Request) -> Future<[Book]> {
+        print("Full list")
         return Book.query(on: req).all()
+    }
+    
+    private func paginatedList(_ req: Request) throws -> Future<[Book]> {
+        print("Paginated list")
+        return try Book.query(on: req).paginate(for: req).map { paginated in
+            return paginated.data
+        }
     }
     
     func listComments(_ req: Request) throws -> Future<Response> {
