@@ -34,11 +34,9 @@ public func configure(
 
 
 private func getDatabaseConfig(_ env: Environment) -> PostgreSQLDatabaseConfig {
-    
-    // TODO: Change to 'isRelease'
-    if env == .production {
-        let databaseUrl = ProcessInfo.processInfo.environment["DATABASE_URL"]
-        return PostgreSQLDatabaseConfig(url: databaseUrl!)!
+    if env.isRelease {
+        let databaseUrl = ProcessInfo.processInfo.environment["DATABASE_URL"]!
+        return PostgreSQLDatabaseConfig(url: databaseUrl)!
     } else {
         return PostgreSQLDatabaseConfig(
             hostname: "127.0.0.1",
