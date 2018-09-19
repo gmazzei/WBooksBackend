@@ -16,12 +16,10 @@ final class BookController: BaseController {
     
     
     private func fullList(_ req: Request) -> Future<[Book]> {
-        print("Full list")
         return Book.query(on: req).all()
     }
     
     private func paginatedList(_ req: Request) throws -> Future<[Book]> {
-        print("Paginated list")
         return try Book.query(on: req).paginate(for: req).map { paginated in
             return paginated.data
         }
