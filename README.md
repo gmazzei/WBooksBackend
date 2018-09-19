@@ -17,6 +17,7 @@ The app is now running on Heroku. You can interact with it through this URL: <br
 <pre>
 https://powerful-waters-21107.herokuapp.com/
 </pre>
+<br/>
 
 ### Example
 <pre>
@@ -32,15 +33,20 @@ curl https://powerful-waters-21107.herokuapp.com<b>/books</b>
 
 ## Running locally
 
-1) Install PostgreSQL
+1) Install Vapor
+<pre>
+brew install vapor/tap/vapor
+</pre>
+<br/>
+
+2) Install PostgreSQL
 <pre>
 brew install postgres
 brew services start postgresql
 </pre>
-
 <br/>
 
-2) Prepare DB
+3) Prepare DB
 <pre>
 createdb wbooks_test
 psql wbooks_test
@@ -51,16 +57,17 @@ dropdb wbooks_test
 </pre>
 <br/>
 
-2) Clone and start the app
+4) Clone and start the app
 <pre>
 git clone git@github.com:gmazzei/WBooksBackend.git
 cd WBooksBackend
+vapor update -y
 swift build
 swift run
 </pre>
 <br/>
 
-3) Open another terminal and run the following code to add data into the DB:
+5) Open another terminal and run the following code to add data into the DB:
 <pre>
 psql wbooks
 INSERT INTO "User" (id, username, password) 
