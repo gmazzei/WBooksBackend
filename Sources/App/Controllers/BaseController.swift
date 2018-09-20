@@ -20,7 +20,7 @@ class BaseController {
     }
     
     internal func createGetResponse(_ req: Request, data: Any) throws -> Response {
-        let response = req.makeResponse()
+        let response = req.response()
         response.http.status = .ok
         response.http.headers.replaceOrAdd(name: .contentType, value: "application/json")
         
@@ -31,7 +31,7 @@ class BaseController {
     }
     
     internal func createPostResponse(_ req: Request, data: Data) -> Response {
-        let response = req.makeResponse()
+        let response = req.response()
         response.http.status = .created
         response.http.headers.replaceOrAdd(name: .contentType, value: "application/json")
         response.http.body = HTTPBody(data: data)
