@@ -16,7 +16,10 @@ class BaseController {
     }
     
     internal func checkAuth(_ req: Request) throws {
-        try req.requireAuthenticated(User.self)
+        let environment = try Environment.detect()
+        if environment.isRelease {
+            try checkAuth(req)
+        }
     }
     
     internal func createGetResponse(_ req: Request, data: Any) throws -> Response {
